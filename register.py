@@ -22,7 +22,5 @@ def register(username, password):
 
 
 if __name__ == '__main__':
-    accounts = []
-    for index in range(1, 1000):
-        accounts.append((f'admin{index}', f'admin{index}'))
+    accounts = [(f'admin{index}', f'admin{index}') for index in range(1, 1000)]
     run(register, accounts)

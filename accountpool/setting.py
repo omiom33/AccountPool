@@ -17,7 +17,7 @@ LOG_DIR = join(ROOT_DIR, env.str('LOG_DIR', 'logs'))
 # definition of environments
 DEV_MODE, TEST_MODE, PROD_MODE = 'dev', 'test', 'prod'
 APP_ENV = env.str('APP_ENV', DEV_MODE).lower()
-APP_DEBUG = env.bool('APP_DEBUG', True if APP_ENV == DEV_MODE else False)
+APP_DEBUG = env.bool('APP_DEBUG', APP_ENV == DEV_MODE)
 APP_DEV = IS_DEV = APP_ENV == DEV_MODE
 APP_PROD = IS_PROD = APP_ENV == PROD_MODE
 APP_TEST = IS_TEST = APP_ENV == TEST_MODE
@@ -30,10 +30,7 @@ REDIS_PORT = env.int('REDIS_PORT', 6379)
 REDIS_PASSWORD = env.str('REDIS_PASSWORD', None)
 # redis db, if no choice, set it to 0
 REDIS_DB = env.int('REDIS_DB', 0)
-# redis connection string, like redis://[password]@host:port or rediss://[password]@host:port/0
-REDIS_CONNECTION_STRING = env.str('REDIS_CONNECTION_STRING', None)
-
-if REDIS_CONNECTION_STRING:
+if REDIS_CONNECTION_STRING := env.str('REDIS_CONNECTION_STRING', None):
     REDIS_HOST, REDIS_PORT, REDIS_PASSWORD, REDIS_DB = parse_redis_connection_string(REDIS_CONNECTION_STRING)
 
 # redis hash table key name
